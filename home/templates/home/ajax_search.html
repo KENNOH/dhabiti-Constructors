@@ -1,0 +1,12 @@
+{% if articles.count > 0 %}
+{% for article in articles %}
+<li><p>
+<strong>Service Name: </strong> {{ article.Title }}<br><strong>Company Name: </strong>{{ article.company_name}}<br><a href="{{article.attachment.url}}">{{article.attachment}}</a><br>
+<strong>Description: </strong>  {{article.description}}<br><strong>Location and Contacts: </strong>  {{article.location}}<br>   {{article.email }}<br>0{{article.cellphone}}<br>
+<a href="/bookings/">Book an appointment or make an inquiry</a></p></li>
+
+ 
+{% endfor %}
+{% else %}
+<li> None to show!</li>
+{% endif %}

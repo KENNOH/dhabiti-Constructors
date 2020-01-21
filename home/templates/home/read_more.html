@@ -1,0 +1,92 @@
+{% extends 'home/index.html' %}
+{% load staticfiles %}
+{% block content %}
+<<div class="container">
+  <div class="featured-post-wrapper">
+    <div class="featured-post-text-wrapper">
+      <div class="row" style="margin-top:50px;">
+        <div class="col-md-2 col-md-offset-2"></div>
+        <div class="col-md-8 col-md-offset-2">
+          <div class="login-panel panel panel-default">
+
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <center>
+                  <h6 class="m-0 font-weight-bold text-primary">More details</h6>
+                </center>
+                <div style="float: right;">
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                    <form method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="modal"
+                      data-target="#revModal">{% csrf_token %}
+                      <p class="bs-component">
+                        <table class="radii">
+                          <tbody>
+                        <style type="text/css">
+                          .img {
+                            max-width: 100px !important;
+                            max-height: 100px !important;
+                            border-radius: 50%;
+                          }
+                        </style>
+                        {{form.non_field_errors}}
+                        {% if details.display_pic %}
+                        <div style="max-height: 300px;overflow:hidden;">
+                            <img src="{{ details.display_pic.url }}" width="100%" alt="">
+                        </div>
+                        {% else %}
+                        <strong>
+                        <img class="img-profile rounded-circle" src="{% static '/css/img/empty-profile.jpg' %}">
+                        </strong>
+                        {% endif %}
+                        <br><br>
+                       <strong><label>First Name:</label></strong> <h6 class="cat-links">{{u.first_name}}</h6>
+                        <strong><label>Last Name:</label></strong>{{u.last_name}}<br>
+                        <strong><label>Username:</label></strong>{{u.username}}<br>
+                        <strong><label>Specializations:</label></strong>{{details.specialization}}<br>
+                    <strong> <label>About the worker:</label><textarea name="bio" class="form-control chattextarea" readonly placeholder="Type your bio here" id="id_bio" width="100%"
+                            cols="80" rows="4">{{details.bio}}</textarea>
+                          </tbody>
+                        </table>
+                      </p>
+                      <input type="hidden" name="next" value="{{ next }}" />
+
+                      <div class="modal fade" id="revModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to continue with this
+                                action?</h5>
+                              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">X</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">Select "Proceed" to commit these changes.</div>
+                            <div class="modal-footer">
+                              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                              <button class="btn btn-warning" type="submit" value="submit">Proceed</button>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </form>
+                  </table>
+                </div>
+              </div>
+              <div class="card-footer small text-muted"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 col-md-offset-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

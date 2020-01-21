@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Dhabiti Construction Services</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    {% load static %}
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Expanded:400,600,700" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    
+    <link href="{% static 'plugin-frameworks/bootstrap.css' %}" rel="stylesheet">
+    
+    <link href="{% static 'fonts/ionicons.css' %}" rel="stylesheet">
+    
+        
+    <link href="{% static 'common/styles.css' %}" rel="stylesheet">
+    
+    
+</head>
+<body>
+    
+    <header>
+        <div class="bg-191">
+            <div class="container"> 
+                <div class="oflow-hidden color-ash font-9 text-sm-center ptb-sm-5">
+                
+                    <ul class="float-left float-sm-none list-a-plr-10 list-a-plr-sm-5 list-a-ptb-15 list-a-ptb-sm-10">
+                        <li class="active"><a class="pl-0 pl-sm-10" href="/"><h2><span class="color-primary"><b>Dhabiti Construction Services</b></span></h2> </a></li>
+                        
+                    </ul>
+                    
+                </div><!-- top-menu -->
+            </div><!-- container -->
+        </div><!-- bg-191 -->
+        
+        <div class="container">
+            <a class="right-area src-btn" href="#" >
+                <i class="active src-icn ion-search"></i>
+                <i class="close-icn ion-close"></i>
+            </a>
+            <div class="src-form">
+                <form>
+                    <input type="text" placeholder="Search here">
+                    <button type="submit"><i class="ion-search"></i></a></button>
+                </form>
+            </div><!-- src-form -->
+            
+            <a class="menu-nav-icon" data-menu="#main-menu" href="#"><i class="ion-navicon"></i></a>
+            
+            <ul class="main-menu" id="main-menu">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="/logout/">Sign out</a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div><!-- container -->
+    </header>
+    
+    {% block content %}
+    
+    <section class="pt-0">
+        <div class="container">
+        
+            <div class="accordian">
+                <h5><a data-accordian="#accordian-1" class="a-title" href="#">
+                    <b>About Us</b><i class="ion-plus"></i></a></h5>
+                    
+                <div class="a-body" id="accordian-1">
+                    <div class="a-body-inner">
+                        <p>Dhabiti House Constructors Online Service is a web based platform that helps customers reach house builders and constructors, specifically masons, plumbers, electricians and painters for their services. 
+The need for this platform arises from the fact that it is quite difficult to find any of these workers when needed, especially in urban centers. Many of these builders work through referrals which is a really uneven way of job distribution. This way, it limits the amount of customers the constructor handles. When customers do find a worker, it is challenging to verify whether or not the he or she is well-qualified for the job. 
+ </p>
+                        <a class="mt-15 link-brdr-btm-primary color-primary" href="#"><b>Read more</b></a>  
+                    </div><!-- a-body-inner --> 
+                </div><!-- a-body -->   
+            </div><!-- accordian -->
+            
+            
+            
+            <div class="accordian">
+                <h5><a data-accordian="#accordian-3" class="a-title" href="#">
+                    <b>Pricing</b><i class="ion-plus"></i></a></h5>
+                    
+                <div class="a-body" id="accordian-3">
+                    <div class="a-body-inner">
+                        <p>Dhabiti House Constructors Online Service is a web based platform that helps customers reach house builders and constructors, specifically masons, plumbers, electricians and painters for their services. 
+The need for this platform arises from the fact that it is quite difficult to find any of these workers when needed, especially in urban centers. Many of these builders work through referrals which is a really uneven way of job distribution. This way, it limits the amount of customers the constructor handles. When customers do find a worker, it is challenging to verify whether or not the he or she is well-qualified for the job. 
+ </p>
+                        <a class="mt-15 link-brdr-btm-primary color-primary" href="#"><b>Read more</b></a>  
+                    </div><!-- a-body-inner --> 
+                </div><!-- a-body -->   
+            </div><!-- accordian -->
+    
+        </div><!-- container -->
+
+        </div><!-- container -->
+    </section>
+
+<center>
+            <a class="btn-fill-primary btn-b-md plr-30 mb-10 mr-5" href="/register/"><b>I am looking to get hired</b></a>    
+            </center>
+
+
+<section class="pb-20">
+        <div class="container">
+            <h2 class="mb-50"><b>Services Categories</b></h2>
+            <h5><b>I am looking to hire:</b></h5>
+            <a class="btn-fill-primary btn-b-md plr-30 mb-10 mr-5" href="#"><b>All</b></a>
+            <a class="btn-fill-grey btn-b-md plr-25 mb-10 mr-5" href="#"><b>Electricians</b></a>
+            <a class="btn-fill-grey btn-b-md plr-25 mb-10 mr-5" href="#"><b>Plumbers</b></a>
+            <a class="btn-fill-grey btn-b-md plr-25 mb-10 mr-5" href="#"><b>Masons</b></a>
+            <a class="btn-fill-grey btn-b-md plr-25 mb-10 " href="#"><b>Contractors</b></a>
+            <a class="btn-fill-grey btn-b-md plr-25 mb-10 " href="#"><b>Foremen</b></a>
+            <a class="btn-fill-grey btn-b-md plr-25 mb-10 " href="#"><b>Architects</b></a>
+            <a class="btn-fill-grey btn-b-md plr-25 mb-10 " href="#"><b>Construction Workers</b></a>
+        </div><!-- container -->
+    </section>
+
+    <!-- container --><center>
+        <h4 class="p-title"><b></b></h4>
+                            <p class="mb-20">This information is subject to our terms and conditions</p>
+    </center>
+                            
+                            
+    {% endblock %}
+    
+    
+    <footer class="bg-191 color-ccc">
+        
+        <div class="container">
+            <div class="pt-50 pb-20 pos-relative">
+                <div class="abs-tblr pt-50 z--1 text-center">
+                    <div class="h-80 pos-relative"><img class="opacty-1 h-100 w-auto" src="{% static 'images/map.png' %}" alt=""></div>
+                </div>
+                
+            </div><!-- ptb-50 -->
+            
+            <div class="brdr-ash-1 opacty-2"></div>
+            
+            
+        </div><!-- container -->
+    </footer>
+    
+    <!-- SCIPTS -->
+    
+    <script src="{% static 'plugin-frameworks/jquery-3.2.1.min.js' %}"></script>
+    
+    <script src="{% static 'plugin-frameworks/tether.min.js' %}"></script>
+    
+    <script src="{% static 'plugin-frameworks/bootstrap.js' %}"></script>
+    
+    <script src="{% static 'common/scripts.js' %}"></script>
+    
+</body>
+</html>

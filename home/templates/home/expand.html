@@ -1,0 +1,51 @@
+{% extends 'home/index.html' %}
+{% load static %}
+{% block content %}
+	<section>
+		<div class="container">
+			<div class="row">
+			
+				<div class="col-md-12 col-lg-8">
+					<img src="{{ item.attachment.url }}" alt="">
+					<h3 class="mt-30"><b>Name: {{item.user}}</b></h3>
+					<ul class="list-li-mr-20 mtb-15">
+						<li><a href="#"><b>Published on: </b></a> {{item.created_at}}</li>
+						<li><i class="color-primary mr-5 font-12 ion-ios-bolt"></i>Cost Per day : {{item.cost }}</li>
+					</ul>
+					
+			
+					<p class="mtb-15"><b>Contact Phone: {{item.contact_phone}}.</b></p>
+					<p class="mtb-15"><b>Contact Email: {{item.contact_email}}.</b></p>
+					<p class="mtb-15"><b>Location: {{item.location}}.</b></p>
+					<p class="mtb-15"><b>Availability Status: 
+						{% if item.availability ==  True %}
+					available
+					{% else %}
+					not available
+					{% endif %}
+
+				</b></p>
+					<p class="mtb-15"><b>Service Description: {{item.description}}.</b></p>
+	
+					            <a class="btn-fill-primary btn-b-md plr-30 mb-10 mr-5" href="{% url 'create_booking' urlhash=item.urlhash %}"><b>Book appointment</b></a>
+					            
+					<div class="float-left-right text-center mt-40 mt-sm-20">
+				
+						<ul class="mb-30 list-li-mt-10 list-li-mr-5 list-a-plr-15 list-a-ptb-7 list-a-bg-grey list-a-br-2 list-a-hvr-primary ">
+							<li><a href="#">{{item.Type}}</a></li>
+						</ul>
+						
+						
+					</div><!-- float-left-right -->
+				
+					
+					
+				</div><!-- col-md-9 -->
+				
+				
+			</div><!-- row -->
+			
+		</div><!-- container -->
+	</section>
+	
+{% endblock %}

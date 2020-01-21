@@ -1,0 +1,72 @@
+{% extends 'home/index.html' %}
+{% block content %}
+<div class="container">
+  <div class="featured-post-wrapper">
+    <div class="featured-post-text-wrapper">
+      <div class="row">
+        <div class="col-md-2 col-md-offset-2"></div>
+        <div class="col-md-8 col-md-offset-2">
+          <div class="login-panel panel panel-default">
+
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <center>
+                  <h6 class="m-0 font-weight-bold text-primary">Sign in Here</h6>
+                </center>
+                <div style="float: right;">
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+<form method="post">{% csrf_token %}
+                <p class="bs-component">
+                  <table class="radii">
+                    <tbody>
+                      {% if form.errors %}
+                      {% for field in form %}
+                      {% for error in field.errors %}
+                      <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                      </div>
+                      {% endfor %}
+                      {% endfor %}
+                      {% for error in form.non_field_errors %}
+                      <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                      </div>
+                      {% endfor %}
+                      {% endif %}
+                      <p><i class="fa fa-user" aria-hidden="true"></i>
+                        {{form.username.label}}:{{form.username}}</p>
+                      <p><i class='fa fa-lock'></i> {{form.password.label}}: {{form.password}}</p><br>
+
+                    </tbody>
+                  </table>
+                </p>
+               <p class="bs-component">
+                  <center>
+                    <input class="btn btn-success btn-sm btn-block" type="Submit" value="Submit" />
+                  </center>
+                  <br>
+                </p>
+                <input type="hidden" name="next" value="{{ next }}" />
+                               </form>
+                  </table>
+                </div>
+              </div>
+              <div class="card-footer small text-muted"></div>
+            </div>
+          </div><br><br><br><br><br><br>
+        </div>
+
+        <div class="col-md-2 col-md-offset-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+{% endblock %}

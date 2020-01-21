@@ -1,0 +1,34 @@
+{% extends 'home/index.html' %}
+{% block content %}
+<style type="text/css">
+	.radii {
+		border-radius: 5px;
+	}
+</style>
+<div class="container">
+	<div class="featured-post-wrapper">
+		<div class="featured-post-text-wrapper">
+			<div class="row" style="margin-top:100px;">
+				<div class="col-md-2 col-md-offset-2"></div>
+				<div class="col-md-8 col-md-offset-2">
+					<div class="login-panel panel panel-default">
+						<div class="panel-heading">
+							<center>
+								<h3 class="panel-title">Registration Successful</h3>
+							</center>
+						</div>
+						<div class="panel-body">
+							<p>
+								<h6>You have registered successfully!! We have sent you an email confirmation link to
+									activate your account.Please confirm your registration and login <a href="/accounts/login/">here</a></h6>
+							</p>
+							<script>setTimeout(function () { window.location.href = "/accounts/login/" }, 10000);</script>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 col-md-offset-2"></div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

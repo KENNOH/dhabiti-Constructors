@@ -1,0 +1,39 @@
+{% extends 'home/index.html' %}
+{% block content %}
+<div class="navbar hidden-phone">
+<h5 class="title-bg">Login Here</h5>
+<form method="post"  class="form-horizontal" action="/accounts/login/">{% csrf_token %}
+                  {% csrf_token %} 
+                  {% if form.errors %}
+                    {% for field in form %}
+                       {% for error in field.errors %}
+                          <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                          </div>
+                      {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                         <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+               <div class="input-prepend">
+                    <span class="add-on"><i class="icon-user"></i></span>
+                    {{form.username}}
+                </div><br><br>
+                 <div class="input-prepend">
+                    <span class="add-on"><i class="icon-lock"></i></span>
+                    {{form.password}}
+                </div><br><br>
+              <div class="row">
+                    <div class="span2">
+                        <input type="submit" class="btn btn-inverse" value="submit">
+                    </div>
+                    <div class="span2">
+                        <a class="d-block small" href="/register/">Create account here</a>
+                    </div>
+                </div>
+            </form> 
+</div>			
+{% endblock %}

@@ -1,0 +1,14 @@
+{% autoescape off %}
+Hi {{ user.username }},welcome to Freelance Manager,If this is you,Please click on the link below to confirm your registration for Freelance Manager Account in order to activate your account,
+
+http://{{ domain }}{% url 'activate'  uidb64=uid token=token %}
+
+If clicking the link above doesn't work, please copy and paste the URL in a new browser
+window instead.Please note that this link expires in 72 hours after which the account will be deleted.
+
+
+Sincerely,
+The Freelance Manager Express Team.
+{% endautoescape %}
+
+By activating your account you are accepting to our terms and conditions
