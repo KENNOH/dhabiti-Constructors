@@ -3,7 +3,7 @@ import django_tables2 as tables
 from django.utils.html import format_html
 from django_tables2.utils import A
 from django.urls import reverse
-from dashboard.models import Service,Images,Transaction, C2BMessage, OnlineCheckoutResponse
+from dashboard.models import Service, Images, Transaction, C2BMessage, OnlineCheckoutResponse, Bookings
 
 class ServiceTable(tables.Table):
 	#edit = tables.LinkColumn('accept',args=[A('pk')],verbose_name="Action",orderable=False,empty_values=())
@@ -18,13 +18,14 @@ class ServiceTable(tables.Table):
 
 	class Meta:
 		model = Service
-		fields = ('urlhash','Type','location','cost','contact_phone','contact_email','status','availability')
+		fields = ('urlhash','Type','location','cost','contact_phone','contact_email','availability')
 
 
-# class TransactionTable(tables.Table):
-#     class Meta:
-#         model = Transaction
-#         fields = ('user_id','amount','status','last_updated')
+class BookingsTable(tables.Table):
+    class Meta:
+        model = Bookings
+        fields = ('urlhash', 'user', 'name', 'contact_phone',
+                  'contact_email', 'start_date', 'message')
 
 
 class TransactionTable(tables.Table):

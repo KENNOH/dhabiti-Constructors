@@ -1,109 +1,92 @@
-{% extends 'dashboard/service_provider.html' %}
-{% load static %}
-{% block content %}
+{% extends 'dashboard/service_provider.html' %} {% load static %} {% block content %}
 <div class="container">
-  <div class="featured-post-wrapper">
-    <div class="featured-post-text-wrapper">
-      <div class="row">
-        <div class="col-md-2 col-md-offset-2"></div>
-        <div class="col-md-8 col-md-offset-2">
-          <div class="login-panel panel panel-default">
+    <div class="featured-post-wrapper">
+        <div class="featured-post-text-wrapper">
+            <div class="row">
+                <div class="col-md-2 col-md-offset-2"></div>
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="login-panel panel panel-default">
 
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <center>
-                  <h6 class="m-0 font-weight-bold text-primary">Edit Profile Form</h6>
-                </center>
-                <div style="float: right;">
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <center>
+                                    <h6 class="m-0 font-weight-bold text-primary">Edit Profile Form</h6>
+                                </center>
+                                <div style="float: right;">
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 
-                    <form method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="modal"
-                      data-target="#revModal">{% csrf_token %}
-                      <p class="bs-component">
-                        <table class="radii">
-                          <tbody>
-                        <style type="text/css">
-                          .img {
-                            max-width: 100px !important;
-                            max-height: 100px !important;
-                            border-radius: 50%;
-                          }
-                        </style>
-                        {{form.non_field_errors}}
-                        <strong><label>Upload or change your profile picture</label></strong>{{form.display_pic}}<br><br>
-                        {% if user.profile.display_pic %}
-                        <a href="{{user.profile.display_pic.url}}"> <img src="{{user.profile.display_pic.url}}" class="img" alt="No image"></a>
-                        {% else %}
-                        <strong>
+                                        <form method="post" class="form-horizontal" enctype="multipart/form-data" data-toggle="modal" data-target="#revModal">{% csrf_token %}
+                                            <p class="bs-component">
+                                                <table class="radii">
+                                                    <tbody>
+                                                        <style type="text/css">
+                                                            .img {
+                                                                max-width: 100px !important;
+                                                                max-height: 100px !important;
+                                                                border-radius: 50%;
+                                                            }
+                                                        </style>
+                                                        {{form.non_field_errors}}
+                                                        <strong><label>Upload or change your profile picture</label></strong>{{form.display_pic}}<br><br> {% if user.profile.display_pic %}
+                                                        <a href="{{user.profile.display_pic.url}}"> <img src="{{user.profile.display_pic.url}}" class="img" alt="No image"></a>
+                                                        {% else %}
+                                                        <strong>
                         <img class="img-profile rounded-circle" src="{% static '/css/img/empty-profile.jpg' %}">
-                        </strong>
-                        {% endif %}
-                        <br><br>
-                        <strong><label>Username</label>:</strong> {{form.username}}
-                        <strong><label>First Name:</label></strong>{{form.first_name}}
-                        <strong><label>Last Name:</label></strong>{{form.last_name}}
-                        <strong><label>Email:</label></strong>{{form.email}}
-                        <strong><label>Phone Number:</label></strong><input type"text" name="Phone" class="form-control" readonly="True"
-                          value="{{user.profile.phone}}">
-                        <strong><label>Select your prefered area of specialization</label>:</strong> {{form.specialization}}
-                        <strong>
-                          <P>
-                            Current selection:{{p.specialization}}
-                          </P>
-                        </strong>
-                        <strong><label>A little bio about yourself</label>:</strong>
-                        <textarea name="bio" class="form-control chattextarea" placeholder="Type your bio here" id="id_bio" width="100%"
-                          cols="80" rows="4">{{user.profile.bio}}</textarea>
-                        <br>
-                          </tbody>
-                        </table>
-                      </p>
-                      <p class="bs-component">
-                        <center>
-                          <a href="#" data-toggle="modal" data-target="#revModal">
-                            <input class="btn btn-success btn-sm btn-block" type="Submit" value="Submit" />
-                          </a>
-                        </center>
-                      </p>
-                      <input type="hidden" name="next" value="{{ next }}" />
+                        </strong> {% endif %}
+                                                        <br><br>
+                                                        <strong><label>Username</label>:</strong> {{form.username}}
+                                                        <strong><label>First Name:</label></strong>{{form.first_name}}
+                                                        <strong><label>Last Name:</label></strong>{{form.last_name}}
+                                                        <strong><label>Email:</label></strong>{{form.email}}
+                                                        <strong><label>Phone Number:</label></strong><input type "text" name="Phone" class="form-control" readonly="True" value="{{user.profile.phone}}">
+                                                    </tbody>
+                                                </table>
+                                            </p>
+                                            <p class="bs-component">
+                                                <center>
+                                                    <a href="#" data-toggle="modal" data-target="#revModal">
+                                                        <input class="btn btn-success btn-sm btn-block" type="Submit" value="Submit" />
+                                                    </a>
+                                                </center>
+                                            </p>
+                                            <input type="hidden" name="next" value="{{ next }}" />
 
-                      <div class="modal fade" id="revModal" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to continue with this
-                                action?</h5>
-                              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <div class="modal fade" id="revModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to continue with this action?
+                                                            </h5>
+                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">X</span>
                               </button>
-                            </div>
-                            <div class="modal-body">Select "Proceed" to commit these changes.</div>
-                            <div class="modal-footer">
-                              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                              <button class="btn btn-warning" type="submit" value="submit">Proceed</button>
+                                                        </div>
+                                                        <div class="modal-body">Select "Proceed" to commit these changes.</div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                            <button class="btn btn-warning" type="submit" value="submit">Proceed</button>
 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </table>
+                                </div>
                             </div>
-                          </div>
+                            <div class="card-footer small text-muted"></div>
                         </div>
-                      </div>
-
-                    </form>
-                  </table>
+                    </div>
                 </div>
-              </div>
-              <div class="card-footer small text-muted"></div>
+                <div class="col-md-2 col-md-offset-2"></div>
             </div>
-          </div>
         </div>
-        <div class="col-md-2 col-md-offset-2"></div>
-      </div>
     </div>
-  </div>
 </div>
 </div>
 

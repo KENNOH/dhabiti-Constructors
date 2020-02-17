@@ -1,111 +1,118 @@
-{% extends 'dashboard/service_provider.html' %}
-{% load static %}
-{% block content %}
+{% extends 'dashboard/service_provider.html' %} {% load static %} {% block content %}
 <div class="container">
-  <div class="featured-post-wrapper">
-    <div class="featured-post-text-wrapper">
-      <div class="row">
-        <div class="col-md-2 col-md-offset-2"></div>
-        <div class="col-md-8 col-md-offset-2">
-          <div class="login-panel panel panel-default">
+    <div class="featured-post-wrapper">
+        <div class="featured-post-text-wrapper">
+            <div class="row">
+                <div class="col-md-2 col-md-offset-2"></div>
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="login-panel panel panel-default">
 
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <center>
-                  <h6 class="m-0 font-weight-bold text-primary">Add Service Profile Form</h6>
-                </center>
-                <div style="float: right;">
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <center>
+                                    <h6 class="m-0 font-weight-bold text-primary">Add Service Profile Form</h6>
+                                </center>
+                                <div style="float: right;">
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 
-                   <form method="POST" class="form-horizontal" enctype="multipart/form-data">{% csrf_token %}
-                      <p class="bs-component"></p>
-                      <div style="float: right;">
-                        <p class="text-danger">Fields marked by red * are required</p>
-                      </div><br><br>
+                                        <form method="POST" class="form-horizontal" enctype="multipart/form-data">{% csrf_token %}
+                                            <p class="bs-component"></p>
+                                            <div style="float: right;">
+                                                <p class="text-danger">Fields marked by red * are required</p>
+                                            </div><br><br>
 
-                      <div class="form-group">
-                        <strong><label for="inputEmail">Select the service type</label>
+                                            <div class="form-group">
+                                                <strong><label for="inputEmail">Select the service type</label>
                           <span class="text-danger"> * </span>
-                        </strong>
-                        {{form.Type}}{{form.Type.errors}}
-                      </div><br>
+                        </strong> {{form.Type}}{{form.Type.errors}}
+                                            </div><br>
 
-
-                      <div class="form-group">
-                        <strong><label for="inputEmail">Enter the service cost:</label>
+                                            <div class="form-group">
+                                                <strong><label for="inputEmail">Contact Phone</label>
                           <span class="text-danger"> * </span>
-                        </strong>
-                        {{form.cost}}{{form.cost.errors}}
-                      </div><br>
+                        </strong><input type "text" name="phone" class="form-control" readonly="True" value="{{user.profile.phone}}">
+                                            </div><br>
 
-                      <div class="form-group">
-                        <strong><label for="inputEmail">Enter your location:</label>
+                                            <div class="form-group">
+                                                <strong><label for="inputEmail">Contact email</label>
                           <span class="text-danger"> * </span>
-                        </strong>
-                        {{form.location}}{{form.location.errors}}
-                      </div><br>
+                        </strong><input type "text" name="email" class="form-control" readonly="True" value="{{user.email}}">
+                                            </div><br>
 
-                       <div class="form-group">
-                        <strong><label for="inputEmail">Enter Contact Email</label>
+
+
+                                            <div class="form-group">
+                                                <strong><label for="inputEmail">Enter the service cost in (Kshs):</label>
                           <span class="text-danger"> * </span>
-                        </strong>
-                        {{form.contact_email}}{{form.contact_email.errors}}
-                      </div><br>
+                        </strong> {{form.cost}}{{form.cost.errors}}
+                                            </div><br>
 
-                       <div class="form-group">
-                        <strong><label for="inputEmail">Enter the Contact Phone</label>
+                                            <div class="form-group">
+                                                <strong><label for="inputEmail">Enter your location:</label>
                           <span class="text-danger"> * </span>
-                        </strong>
-                        {{form.contact_phone}}{{form.contact_phone.errors}}
-                      </div><br>
+                        </strong> {{form.location}}{{form.location.errors}}
+                                            </div><br>
 
 
-                      <div class="form-group">
-                        <div class="file-field">
-                          <strong>
-                            <label for="inputEmail">Upload your image here:</label>
+
+
+                                            <div class="form-group">
+                                                <div class="file-field">
+                                                    <strong>
+                            <label for="inputEmail">Upload your Profile picture here:</label>
                           </strong><br>
-                          <div class="btn btn-primary btn-sm">
-                            <span>Upload files</span>
-                            {{form.attachment}}
-                          </div><br>
-                          <sub><span class="label label-info">Use Control + select to multiselect files.</span></sub>
-                        </div>
-                      </div>
+                                                    <div class="btn btn-primary btn-sm">
+                                                        <span>Upload files</span> {{form.attachment}}
+                                                    </div><br>
+                                                    <sub><span class="label label-info">Use Control + select to multiselect files.</span></sub>
+                                                </div>
+                                            </div>
 
-                      
-                      <div class="form-group">
-                        <strong>
+
+                                            <div class="form-group">
+                                                <div class="file-field">
+                                                    <strong>
+                            <label for="inputEmail">Upload portfolio images of work done:</label>
+                          </strong><br>
+                                                    <div class="btn btn-primary btn-sm">
+                                                        <span>Upload files</span> {{form.attachment2}}
+                                                    </div><br>
+                                                    <sub><span class="label label-info">Use Control + select to multiselect files.</span></sub>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <strong>
                           <label for="inputEmail">Any message?</label>
-                        </strong>
-                        {{form.description}}
-                      </div>
+                        </strong> {{form.description}}
+                                            </div>
 
-                      </p>
-                      <p class="bs-component">
-                        <center>
-                            <input class="btn btn-success btn-sm btn-block" type="Submit" value="Send Now!" />
-        
-                        </center>
-                      </p>
-                      <input type="hidden" name="next" value="{{ next }}" />
+                                            </p>
+                                            <p class="bs-component">
+                                                <center>
+                                                    <input class="btn btn-success btn-sm btn-block" type="Submit" value="Send Now!" />
 
-                    </form>
-                  </table>
+                                                </center>
+                                            </p>
+                                            <input type="hidden" name="next" value="{{ next }}" />
+
+                                        </form>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card-footer small text-muted"></div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="card-footer small text-muted"></div>
+                <div class="col-md-2 col-md-offset-2"></div>
             </div>
-          </div>
         </div>
-        <div class="col-md-2 col-md-offset-2"></div>
-      </div>
     </div>
-  </div>
 </div>
 </div>
 {% endblock %}

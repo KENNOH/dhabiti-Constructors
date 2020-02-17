@@ -14,8 +14,7 @@ class Service(models.Model):
     description  = models.CharField(max_length=255, blank=True, null=True)
     location = models.CharField(max_length=255, blank=True, null=True)
     cost = models.FloatField(default=0.0)
-    status = models.NullBooleanField(max_length=5, default=0, verbose_name="Processed status")
-    availability = models.NullBooleanField(max_length=5, default=0, verbose_name="Availability status")
+    availability = models.NullBooleanField(max_length=5, default=1, verbose_name="Availability status")
     attachment = models.ImageField(upload_to='dashboard', default='team-1.jpg')
     
     def __str__(self):
@@ -29,6 +28,38 @@ class Images(models.Model):
         return self.urlhash
     class Meta:
         verbose_name_plural = 'Images'
+
+
+class Bookings(models.Model):
+    urlhash = models.ForeignKey(Service, on_delete=models.CASCADE,verbose_name="Reference Code")
+    user = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
+    name = models.CharField(max_length=255)
+    contact_phone = models.CharField(max_length=255)
+    contact_email = models.CharField(max_length=255)
+    start_date = models.DateField()
+    message = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+
+    def __str__(self):
+        return self.urlhash
+
+    class Meta:
+        verbose_name_plural = 'Bookings'
+
+
+class Reports(models.Model):
+    urlhash = models.ForeignKey(Service, on_delete=models.CASCADE, verbose_name="Unique Code")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reference = models.CharField(max_length=255, verbose_name="Item Changed Reference")
+    message = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.urlhash
+
+    class Meta:
+        verbose_name_plural = 'User Actions Reports'
+
 
 class Transaction(models.Model):
     amount = models.FloatField(max_length=30, default=0.0, verbose_name="Amount transacted")

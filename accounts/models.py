@@ -9,8 +9,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=12, verbose_name='Phone Number', unique=True, blank=True, null=True)
     display_pic = models.ImageField(upload_to='accounts/', default="accounts/empty-profile.jpg", blank=True)
-    specialization = models.CharField(max_length=255, verbose_name='Select your skillset here:', blank=True, null=True)
-    bio = models.CharField(max_length=255, verbose_name='A little info about yourself', blank=True, null=True)
+    # specialization = models.CharField(max_length=255, verbose_name='Select your skillset here:', blank=True, null=True)
+    # bio = models.CharField(max_length=255, verbose_name='A little info about yourself', blank=True, null=True)
 
 
 class specialization(models.Model):

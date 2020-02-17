@@ -1,83 +1,101 @@
-{% extends 'dashboard/worker_profile.html' %}
-{% block content %}
-  <div class="card shadow mb-4">
-            <div class="card-header py-3">
-             <center><h6 class="m-0 font-weight-bold text-primary">More Details on the asset</h6></center> 
-              <div style="float: right;"> 
-              </div>           
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  
-                  <tr>
-                    <td><strong>Category:</strong></td><td></td> <td>{{form.category}}</td>
-                  </tr>
-                  <tr>
-                    <td><strong class="text-info">Image:</strong></td><td><p> <img src="{{form.attachment.url}}" alt=""></p>
-                  </td><td></td>
-                  </tr>
-                  <tr>
-                    <td><strong class="text-info">Service Type:</strong></td><td></td> <td>{{form.Type}}</td>
-                  </tr>
-                  <tr>
-                    <td><strong class="text-info">Reference Code:</strong></td><td></td> <td>{{form.urlhash}}</td>
-                  </tr>
-                  <tr>
-                    <td><strong class="text-info">Contact Phone:</strong></td><td></td> <td>{{form.contact_phone}}</td>
-                  </tr>
-                  <tr>
-                    <td><strong class="text-info">Contact_email:</strong></td><td></td> <td>{{form.contact_email}}</td>
-                  </tr>
-                  <tr>
-                    <td><strong class="text-info">Location:</strong></td><td></td> <td>{{form.location}}</td>
-                  </tr>
-                  <tr>
-                    <td><strong class="text-info">Cost Per Day:</strong></td><td></td> <td>{{form.cost}}</td>
-                  </tr>
-                  <tr>
-                    <td><strong class="text-info">Location:</strong></td><td></td> <td>{{form.location}}</td>
-                  </tr>
-                  <tr>
-                    <td><strong class="text-info">Availability Status:</strong></td><td></td> <td>
-                      <input type="checkbox" checked data-toggle="toggle">
+{% extends 'dashboard/worker_profile.html' %} {% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <center>
+            <h6 class="m-0 font-weight-bold text-primary">More Details on the asset</h6>
+        </center>
+        <div style="float: right;">
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                <style type="text/css">
+                    .img {
+                        max-width: 100px !important;
+                        max-height: 100px !important;
+                        border-radius: 50%;
+                    }
+                </style>
+
+                <tr>
+                    <td><strong>Category:</strong></td>
+                    <td></td>
+                    <td>{{form.category}}</td>
+                </tr>
+                <tr>
+                    <td><strong class="text-info">Image:</strong></td>
+                    <td>
+                        <p> <img src="{{form.attachment.url}}" class="img" alt=""></p>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong class="text-info">Service Type:</strong></td>
+                    <td></td>
+                    <td>{{form.Type}}</td>
+                </tr>
+                <tr>
+                    <td><strong class="text-info">Reference Code:</strong></td>
+                    <td></td>
+                    <td>{{form.urlhash}}</td>
+                </tr>
+                <tr>
+                    <td><strong class="text-info">Contact Phone:</strong></td>
+                    <td></td>
+                    <td>{{form.contact_phone}}</td>
+                </tr>
+                <tr>
+                    <td><strong class="text-info">Contact_email:</strong></td>
+                    <td></td>
+                    <td>{{form.contact_email}}</td>
+                </tr>
+                <tr>
+                    <td><strong class="text-info">Location:</strong></td>
+                    <td></td>
+                    <td>{{form.location}}</td>
+                </tr>
+                <tr>
+                    <td><strong class="text-info">Cost Per Day:</strong></td>
+                    <td></td>
+                    <td>{{form.cost}}</td>
+                </tr>
+                <tr>
+                    <td><strong class="text-info">Location:</strong></td>
+                    <td></td>
+                    <td>{{form.location}}</td>
+                </tr>
+                <tr>
+                    <td><strong class="text-info">Availability Status:</strong></td>
+                    <td></td>
+                    <td>
+                        <input type="checkbox" checked data-toggle="toggle">
 
                     </td>
-                  </tr>
-                  <tr>
-                    <td><strong class="text-info">Description:</strong></td><td></td> <td>{{form.description}}</td>
-                  </tr>
-                  <tr>
-                    <td><strong class="text-info">Added By</strong></td><td></td> <td>{{form.user}}</td>
-                  </tr>
-                  <tr>
-                    <td><strong class="text-info">Payment status</strong></td><td></td> <td>
-                      
-                      {% if form.status == False %}
-                       <center>
-                          <a href="#" data-toggle="modal" data-target="#revModal">
-                            <input class="btn btn-success btn-sm btn-block" type="Submit" value="Process Payment (Kshs.200)" />
-                          </a>
-                        </center>
-                        {% else %}
-                        <p>
-                          Payment Done
-                        </p>
-                      {% endif %}
-                    </td>
-                  </tr>
-                  
-                  
-                </table>
+                </tr>
+                <tr>
+                    <td><strong class="text-info">Description:</strong></td>
+                    <td></td>
+                    <td>{{form.description}}</td>
+                </tr>
+                <tr>
+                    <td><strong class="text-info">Added By</strong></td>
+                    <td></td>
+                    <td>{{form.user}}</td>
+                </tr>
 
-              </div>
-            <div class="card-footer small text-muted">
-             
-             <a href="/dashboard/"><button type="button" class="btn-grey">Back</button> </a> 
-              </div>
-              
-            </div>
+            </table>
 
-          </div>
+
+        </div>
+        <div class="card-footer small text-muted">
+
+            <a href="/dashboard/worker/"><button type="button" class="btn-grey">Back</button> </a>
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

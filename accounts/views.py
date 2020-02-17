@@ -24,6 +24,8 @@ def site(request):
 			login(request, user)
 			if user.groups.filter(name='Service Provider').exists():
 				return HttpResponseRedirect('/dashboard/worker/')
+			if user.groups.filter(name='Client').exists():
+				return HttpResponseRedirect('/dashboard/client/')
 			if user.is_staff==True:
 				return HttpResponseRedirect('/admin/')
 		else:
