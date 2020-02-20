@@ -32,7 +32,7 @@ class UpdateProfile(UserChangeForm):
 
 class ServiceForm(forms.ModelForm):
     Type = forms.ModelChoiceField(label="Select Pet type:", required=True, queryset=specialization.objects.all(), widget=forms.Select(attrs={'class': 'form-control', 'name': 'Type'}))
-    attachment = forms.ImageField(label="Attachment:", required=True, widget=forms.ClearableFileInput(attrs={'multiple': False, 'name': 'attachment'}))
+    #attachment = forms.ImageField(label="Attachment:", required=True, widget=forms.ClearableFileInput(attrs={'multiple': False, 'name': 'attachment'}))
     attachment2 = forms.ImageField(label="Attachment:", required=True, widget=forms.ClearableFileInput(attrs={'multiple': True, 'name': 'attachment2'}))
     #contact_email = forms.CharField(label='Contact Email:', max_length=200, required=True,widget=forms.TextInput(attrs={'class': 'form-control form-textbox'}))
     #contact_phone = forms.CharField(label='Contact Phone:', max_length=200, required=True,widget=forms.NumberInput(attrs={'class': 'form-control form-textbox'}))
@@ -42,7 +42,7 @@ class ServiceForm(forms.ModelForm):
 
     class Meta:
         model = Service
-        fields = ('Type','attachment', 'location','cost','description')
+        fields = ('Type', 'location','cost','description')
     
     def clean(self, *args, **kwargs):
         # contact_email = self.cleaned_data['contact_email']

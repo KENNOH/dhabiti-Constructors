@@ -10,11 +10,11 @@
                 }
             </style>
             <div class="col-md-12 col-lg-8">
-                <img src="{{ item.attachment.url }}" class="img" alt="">
+                <img src="{{ item.user.profile.display_pic.url }}" class="img" alt="">
                 <h3 class="mt-30"><b>Name: {{item.user}}</b></h3>
                 <ul class="list-li-mr-20 mtb-15">
                     <li><a href="#"><b>Published on: </b></a> {{item.created_at}}</li>
-                    <li><i class="color-primary mr-5 font-12 ion-ios-bolt"></i>Cost Per day (Kshs): {{item.cost }}</li>
+                    <li><i class="color-primary mr-5 font-12 ion-ios-bolt"></i>Cost Per day (Kshs): {{item.cost }}0</li>
                 </ul>
                 <p class="mtb-15"><b>Contact Phone: {{item.contact_phone}}.</b></p>
                 <p class="mtb-15"><b>Contact Email: {{item.contact_email}}.</b></p>

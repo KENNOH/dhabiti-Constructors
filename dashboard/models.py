@@ -15,7 +15,7 @@ class Service(models.Model):
     location = models.CharField(max_length=255, blank=True, null=True)
     cost = models.FloatField(default=0.0)
     availability = models.NullBooleanField(max_length=5, default=1, verbose_name="Availability status")
-    attachment = models.ImageField(upload_to='dashboard', default='team-1.jpg')
+    #attachment = models.ImageField(upload_to='dashboard', default='team-1.jpg')
     
     def __str__(self):
         return self.urlhash

@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^dashboard/worker/', views.service_provider_home, name='service_provider_home'),
     url(r'^dashboard/transactions/', views.trans, name='trans'),
     url(r'^dashboard/bookings/', views.bookings, name='bookings'),
+    url(r'^dashboard/generate_report/',views.generate_report, name='generate_report'),
 ]

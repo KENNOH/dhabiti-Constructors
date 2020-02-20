@@ -18,7 +18,7 @@ class ServiceTable(tables.Table):
 
 	class Meta:
 		model = Service
-		fields = ('urlhash','Type','location','cost','contact_phone','contact_email','availability')
+		fields = ('urlhash','Type','location','contact_phone','contact_email','availability')
 
 
 class BookingsTable(tables.Table):

@@ -1,0 +1,37 @@
+{% load static %}
+<center>
+    <img src="http://127.0.0.1:8000/static/img/construction2.jpg" width="250" height="120" />
+    <h3>Bookings Reports</h3>
+</center>
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Reference Id</th>
+                    <th>Name</th>
+                    <th>Mobile Number</th>
+                    <th>Email</th>
+                    <th>Start Date</th>
+                    <th>Added on</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in bookings %}
+                <tr>
+                    <td></td>
+                    <td>{{ i.urlhash}}</td>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.contact_phone }}</td>
+                    <td>{{ i.contact_email }}</td>
+                    <td>{{i.start_date}}</td>
+                    <td>{{i.created_at}}</td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

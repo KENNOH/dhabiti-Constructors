@@ -30,6 +30,7 @@ from .models import Images,Service,Transaction, C2BMessage, OnlineCheckoutRespon
 import string ,random
 from .tables import ServiceTable, TransactionTable, BookingsTable
 from django_tables2 import RequestConfig
+from .render import Render
 
 
 def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
@@ -89,20 +90,23 @@ def add(request):
 	if request.method == 'POST':
 		form = ServiceForm(request.POST, request.FILES)
 		if form.is_valid():
-		    Type = form.cleaned_data['Type']
-		    email = request.user.email
-		    request.user.refresh_from_db()
-		    phone = request.user.profile.phone
-		    description = form.cleaned_data['description']
-		    loc = form.cleaned_data['location']
-		    cost = form.cleaned_data['cost']
-		    image = form.cleaned_data['attachment']
-		    rand = id_generator()
-		    Service.objects.create(Type=Type,contact_email=email,cost=cost,attachment=image,contact_phone=phone,description=description,urlhash=rand,user=request.user,location=loc)
-		    for file in request.FILES.getlist("attachment2"):
-		        Images.objects.create(urlhash=rand,attachment=file)
-		    messages.info(request, "Processed successfully.")
-		    return HttpResponseRedirect('/dashboard/worker/')
+			if not Service.objects.filter(user=request.user).count() >2:
+				Type = form.cleaned_data['Type']
+				email = request.user.email
+				request.user.refresh_from_db()
+				phone = request.user.profile.phone
+				description = form.cleaned_data['description']
+				loc = form.cleaned_data['location']
+				cost = form.cleaned_data['cost']
+				rand = id_generator()
+				Service.objects.create(Type=Type,contact_email=email,cost=cost,contact_phone=phone,description=description,urlhash=rand,user=request.user,location=loc)
+				for file in request.FILES.getlist("attachment2"):
+					Images.objects.create(urlhash=rand,attachment=file)
+				messages.info(request, "Processed successfully.")
+				return HttpResponseRedirect('/dashboard/worker/')
+			else:
+				messages.info(request, "Sorry, you can only add a maximum of two service profiles.")
+				return HttpResponseRedirect('/dashboard/worker/')
 		else:
 		    return render(request, 'dashboard/add.html', {"form": form})
 	else:
@@ -129,3 +133,17 @@ def bookings(request):
 	trans = BookingsTable(Bookings.objects.all().filter(urlhash__in=data))
 	RequestConfig(request, paginate={"per_page": 20}).configure(trans)
 	return render(request, 'dashboard/bookings.html', {'bookings': trans})
+
+
+@login_required(login_url='/accounts/login/')
+def generate_report(request):
+	hidden = request.POST['hidden']
+	if hidden == 'transactions':
+		trans = Transaction.objects.all()
+		return Render.render('dashboard/transactions_pdf.html', {'trans': trans})
+	if hidden == 'bookings':
+		data = []
+		for i in Service.objects.all().filter(user=request.user):
+			data.append(i)
+		bookings = Bookings.objects.all().filter(urlhash__in=data)
+		return Render.render('dashboard/bookings_pdf.html', {'bookings': bookings})
