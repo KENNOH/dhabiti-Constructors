@@ -13,25 +13,30 @@ from django.http import HttpResponseRedirect
 
 
 class UserLoginForm(forms.Form):
-	username = forms.CharField(label="Username", max_length=30,widget=forms.TextInput(attrs={'class':'form-control','name':'username','placeholder':'Username'}))
+	username = forms.CharField(label="Email", max_length=30,widget=forms.TextInput(attrs={'class':'form-control','name':'username','placeholder':'Email'}))
 	password = forms.CharField(label="Password", max_length=30,widget=forms.PasswordInput(attrs={'class':'form-control','name':'password','placeholder':'Password'}))
 
 	def clean(self,*args,**kwargs):
 		username = self.cleaned_data.get("username")
 		password = self.cleaned_data.get("password")
-		user = authenticate(username=username,password=password)
-		
-		user_qs = User.objects.filter(username=username)
-		if user_qs.count() == 1:
-			user = user_qs.first()
-			if not user.is_active:
-				raise forms.ValidationError("This account is not active,contact admin support to activate the account.")
+		try:
+			main = User.objects.get(email=username)
+			user = authenticate(username=main, password=password)
+			user_qs = User.objects.filter(username=username)
+			if user_qs.count() == 1:
+				user = user_qs.first()
+				if not user.is_active:
+					raise forms.ValidationError(
+						"This account is not active,contact admin support to activate the account.")
 
-		if not user:
-			raise forms.ValidationError("Incorrect username or password entered!")
+			if not user:
+				raise forms.ValidationError("This user does not!")
 
-		if not user.check_password(password):
-			raise forms.ValidationError("Incorrect username or password entered!")
+			if not user.check_password(password):
+				raise forms.ValidationError("Incorrect username or password entered!")
+		except:
+			raise forms.ValidationError("Incorrect email entered")
+
 
 
 		return super(UserLoginForm,self).clean(*args,**kwargs)

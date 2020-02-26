@@ -15,6 +15,7 @@ from django.contrib.auth import (
 from django.contrib.auth.models import Group
 from accounts.models import specialization
 from .models import Service 
+import datetime
 
 
 class UpdateProfile(UserChangeForm):
@@ -70,9 +71,9 @@ class BookForm(forms.Form):
         fields = ('start_date', 'message')
 
     def clean(self, *args, **kwargs):
-        # contact_email = self.cleaned_data['contact_email']
-        # if not contact_email:
-        #     raise forms.ValidationError("Please a contact email.")
+        start_date = self.cleaned_data['start_date']
+        if datetime.date.today() >= start_date:
+            raise forms.ValidationError("Please make sure to select a future date.")
         return super(BookForm, self).clean(*args, **kwargs)
 
     def save(self, commit=True):

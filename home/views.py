@@ -1,3 +1,5 @@
+from django.http import HttpResponse
+from rest_framework.decorators import api_view
 from django.shortcuts import render
 from accounts.models import specialization
 from accounts.models import Profile
@@ -17,6 +19,19 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from dashboard.tables import BookingsTable
 from django_tables2 import RequestConfig
+from .access_token import lipa_na_mpesa
+from django.views.decorators.csrf import csrf_exempt
+import base64
+import json
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from django.core.mail import EmailMultiAlternatives
+from rest_framework.response import Response
+import logging
+from decimal import Decimal
+logger = logging.getLogger(__name__)
+from dashboard.models import Transaction
+
 # Create your views here.
 
 
@@ -71,3 +86,56 @@ def filter_services(request,Username):
     s = specialization.objects.all()
     images = Images.objects.all()
     return render(request,'home/index.html',{'s':s,'services':services,'images':images})
+
+
+def process_payment(request,id):
+    b = Bookings.objects.get(id=id)
+    phone = b.contact_phone
+    amount = 1
+    try:
+        data = {"phone":phone,"amount":amount,'id':id}
+        lipa_na_mpesa(data)
+        messages.info(request, "Payment Initiated.Check your phone and enter pin to confirm.")
+        return HttpResponseRedirect('/view_client_bookings/')
+    except:
+        messages.info(request, "There was an issue processing the payment ,Please try again.")
+        return HttpResponseRedirect('/view_client_bookings/')
+
+
+@csrf_exempt
+def process_lnm(request):
+    con = json.loads(request.read().decode('utf-8'))
+    con1 = con["Body"]
+    data = con1["stkCallback"]
+    update_data = dict()
+    update_data['result_code'] = data['ResultCode']
+    update_data['result_description'] = data['ResultDesc']
+    update_data['checkout_request_id'] = data['CheckoutRequestID']
+    update_data['merchant_request_id'] = data['MerchantRequestID']
+    meta_data = data['CallbackMetadata']['Item']
+    if len(meta_data) > 0:
+        # handle the meta data
+        for item in meta_data:
+            if len(item.values()) > 1:
+                key, value = item.values()
+                if key == 'MpesaReceiptNumber':
+                    update_data['mpesa_receipt_number'] = value
+                if key == 'Amount':
+                    update_data['amount'] = Decimal(value)
+                    a = update_data['amount']
+                if key == 'PhoneNumber':
+                    update_data['phone'] = int(value)
+                    p = update_data['phone']
+                if key == 'TransactionDate':
+                    date = str(value)
+                    year, month, day, hour, min, sec = date[:4], date[4:-
+                                                    8], date[6:-6], date[8:-4], date[10:-2], date[12:]
+                    update_data['transaction_date'] = '{}-{}-{} {}:{}:{}'.format(
+                        year, month, day, hour, min, sec)
+    v = Bookings.objects.get(mpesa_receipt_code=data['CheckoutRequestID'])
+    v.status = 1
+    v.save()
+    Transaction.objects.create(user_id=v.user, amount=update_data['amount'], phone=update_data['phone'], mpesa_receipt_number=update_data['mpesa_receipt_number'])
+    message = {"ResultCode": 0, "ResultDesc": "The service was accepted successfully",
+               "ThirdPartyTransID": "freelance"}
+    return JsonResponse({'message': message})

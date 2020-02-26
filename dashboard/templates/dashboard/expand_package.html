@@ -1,0 +1,28 @@
+{% extends 'home/show.html' %} {% load static %} {% block content %}
+<style type="text/css">
+    .img {
+        max-height: 200px !important;
+    }
+</style>
+<div class="col-lg-4 col-sm-6">
+    <div class="single_ihotel_list">
+        <a href="/expand_package/">
+            <img class="img" src="{{package.image.url}}" alt="">
+            <div class="hotel_text_iner">
+                <h3>{{package.hotel}}</h3>
+                <h6>Room Type: {{package.room_type}}</h6>
+                <h6>Unique package Id: {{package.urlhash}}</h6>
+                <h6>Number of rooms: {{package.rooms}} </h6>
+                <h6>Quantity: {{package.quantity}}</h6>
+                <h6>Cost: {{package.cost}}</h6>
+                <!--
+                    <h6>Car Booking: {% if package.car_booking == '0' %} Not available {% else %} Available {% endif %}</h6>
+                    <h6>Flight Booking: {% if package.flight_booking == '0' %} Not available {% else %} Available {% endif %}</h6>
+                    -->
+                <h6>Available from date: {{package.check_in}}</h6>
+                <h6>End date: {{package.check_out}}</h6>
+            </div>
+        </a>
+    </div>
+</div>
+{% endblock %}

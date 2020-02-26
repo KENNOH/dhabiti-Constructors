@@ -20,7 +20,8 @@ def site(request):
 		if form.is_valid():
 			username = form.cleaned_data.get("username")
 			password = form.cleaned_data.get("password")
-			user = authenticate(username=username,password=password)
+			u = User.objects.get(email=username)
+			user = authenticate(username=u.username,password=password)
 			login(request, user)
 			if user.groups.filter(name='Service Provider').exists():
 				try:

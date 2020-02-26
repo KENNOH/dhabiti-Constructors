@@ -31,6 +31,10 @@ import string ,random
 from .tables import ServiceTable, TransactionTable, BookingsTable
 from django_tables2 import RequestConfig
 from .render import Render
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from .utils import render_to_pdf
+from django.http import HttpResponse
 
 
 def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
@@ -66,9 +70,9 @@ def update_worker(request):
 			else:
 				m = form.cleaned_data['display_pic']
 				obj = p
-				if bool(obj.display_pic) == True:
-					if not str(obj.display_pic.name) == 'accounts/empty-profile.jpg':
-						os.remove(obj.display_pic.path)
+				# if bool(obj.display_pic) == True:
+				# 	if not str(obj.display_pic.name) == 'accounts/empty-profile.jpg':
+				# 		os.remove(obj.display_pic.path)
 				obj.display_pic = m
 				form.save()
 				obj.save()
@@ -134,16 +138,52 @@ def bookings(request):
 	RequestConfig(request, paginate={"per_page": 20}).configure(trans)
 	return render(request, 'dashboard/bookings.html', {'bookings': trans})
 
-
 @login_required(login_url='/accounts/login/')
 def generate_report(request):
 	hidden = request.POST['hidden']
 	if hidden == 'transactions':
-		trans = Transaction.objects.all()
-		return Render.render('dashboard/transactions_pdf.html', {'trans': trans})
+		data = []
+		for i in Service.objects.all().filter(user=request.user):
+			data.append(i)
+		bookings = Bookings.objects.all().filter(urlhash__in=data)
+		data2 = []
+		for i in bookings:
+			data2.append(i.contact_phone)
+		trans = Transaction.objects.filter(phone__in=data2)
+		template = get_template('dashboard/transactions_pdf.html')
+		context = {'transactions': trans}
+		html = template.render(context)
+		pdf = render_to_pdf('dashboard/transactions_pdf.html', context)
+		if pdf:
+			response = HttpResponse(pdf, content_type='application/pdf')
+			filename = "Transactions.pdf"
+			content = "inline; filename='%s'" % (filename)
+			download = request.GET.get("download")
+			if download:
+				content = "attachment; filename='%s'" % (filename)
+			response['Content-Disposition'] = content
+			return response
+		else:
+			return HttpResponse("Not found")
+
+
 	if hidden == 'bookings':
 		data = []
 		for i in Service.objects.all().filter(user=request.user):
 			data.append(i)
 		bookings = Bookings.objects.all().filter(urlhash__in=data)
-		return Render.render('dashboard/bookings_pdf.html', {'bookings': bookings})
+		template = get_template('dashboard/bookings_pdf.html')
+		context = {'bookings': bookings}
+		html = template.render(context)
+		pdf = render_to_pdf('dashboard/bookings_pdf.html', context)
+		if pdf:
+			response = HttpResponse(pdf, content_type='application/pdf')
+			filename = "Bookings.pdf"
+			content = "inline; filename='%s'" % (filename)
+			download = request.GET.get("download")
+			if download:
+				content = "attachment; filename='%s'" % (filename)
+			response['Content-Disposition'] = content
+			return response
+		else:
+			return HttpResponse("Not found")

@@ -1,7 +1,7 @@
 {% load static %}
 <center>
     <img src="http://127.0.0.1:8000/static/img/construction2.jpg" width="250" height="120" />
-    <h3>Bookings Reports</h3>
+    <h3>Payment Transaction Reports</h3>
 </center>
 <div class="card-body">
     <div class="table-responsive">
@@ -9,26 +9,25 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th>Reference Id</th>
-                    <th>Name</th>
-                    <th>Mobile Number</th>
-                    <th>Email</th>
-                    <th>Start Date</th>
+                    <th>Mpesa Receipt Number</th>
+                    <th>Amount</th>
+                    <th>Phone</th>
+                    <th>User</th>
                     <th>Added on</th>
-                    <th>Payment</th>
-
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                {% for i in bookings %}
+                {% for i in transactions %}
                 <tr>
                     <td></td>
-                    <td>{{ i.urlhash}}</td>
-                    <td>{{ i.name }}</td>
-                    <td>{{ i.contact_phone }}</td>
-                    <td>{{ i.contact_email }}</td>
-                    <td>{{i.start_date}}</td>
-                    <td>{{i.created_at}}</td>
+                    <td>{{ i.mpesa_receipt_number}}</td>
+                    <td>{{ i.amount }}</td>
+                    <td>{{ i.phone }}</td>
+                    <td>{{ i.user_id }}</td>
+                    <td>{{i.last_updated}}</td>
+                    <td></td>
+                    <td>{{i.status}}</td>
                     <td></td>
                 </tr>
                 {% endfor %}

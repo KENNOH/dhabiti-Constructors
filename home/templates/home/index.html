@@ -154,7 +154,7 @@
         <div class="container">
             <h2 class="mb-50"><b>Services Categories</b></h2>
             <h5><b>I am looking to hire:</b></h5>
-            <a class="btn-fill-primary btn-b-md plr-30 mb-10 mr-5" href="#"><b>All</b></a> {% for skill in s %}
+            <a class="btn-fill-primary btn-b-md plr-30 mb-10 mr-5" href="/"><b>All</b></a> {% for skill in s %}
             <a class="btn-fill-grey btn-b-md plr-25 mb-10 mr-5" name="item" href="{% url 'sort' Username=skill.name %}"><b>{{skill.name}}s</b></a> {% endfor %}
         </div>
         <!-- container -->

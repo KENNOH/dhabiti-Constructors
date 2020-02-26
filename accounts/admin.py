@@ -105,3 +105,6 @@ admin.site.register(User, UserAdmin)  # Register User with this inline profile
 admin.site.register(Group, GroupAdmin)
 admin.site.register(specialization, EventModelAdmin)
 # Register your models here.
+
+
+
