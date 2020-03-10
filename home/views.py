@@ -17,6 +17,8 @@ from dashboard.forms import BookForm
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import user_passes_test
 from dashboard.tables import BookingsTable
 from django_tables2 import RequestConfig
 from .access_token import lipa_na_mpesa
@@ -36,6 +38,7 @@ from dashboard.models import Transaction
 
 
 @login_required(login_url='/accounts/login/')
+@user_passes_test(lambda u: u.groups.filter(name='Client').exists())
 def create_booking(request,urlhash):
     if request.method == 'POST':
         form = BookForm(request.POST)
@@ -67,6 +70,7 @@ def variables():
 
 
 @login_required(login_url='/accounts/login/')
+@user_passes_test(lambda u: u.groups.filter(name='Client').exists())
 def view_client_bookings(request):
     trans = BookingsTable(Bookings.objects.all().filter(user_id=request.user))
     RequestConfig(request, paginate={"per_page": 20}).configure(trans)

@@ -27,7 +27,7 @@ class BookingsTable(tables.Table):
 
 	def render_edit(self, record):
 		if Bookings.objects.values_list('status', flat=True).get(id=record.pk) == False:
-			return format_html('<a href='+reverse("process_payment", args=[record.pk])+'><button type="button" class="form-control btn-success">Initiate Payment(Kshs200)</button></a>')
+			return format_html('<a href='+reverse("process_payment", args=[record.pk])+'><button type="button" class="form-control btn-success">Pay via Mpesa</button></a>')
 		else:
 			return format_html('<a href="#"><p>Paid</p></a>')
 	class Meta:
@@ -35,6 +35,13 @@ class BookingsTable(tables.Table):
 		fields = ('urlhash', 'user', 'name', 'contact_phone',
                   'contact_email', 'start_date', 'message','status')
 
+
+class BookingsTable1(tables.Table):
+	
+	class Meta:
+		model = Bookings
+		fields = ('urlhash', 'user', 'name', 'contact_phone',
+                    'contact_email', 'start_date', 'message', 'status')
 
 class TransactionTable(tables.Table):
     class Meta:

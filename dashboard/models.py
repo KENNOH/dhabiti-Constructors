@@ -17,14 +17,14 @@ class Service(models.Model):
     availability = models.NullBooleanField(max_length=5, default=1, verbose_name="Availability status")
     #attachment = models.ImageField(upload_to='dashboard', default='team-1.jpg')
     
-    def __unicode__(self):
-        return self.urlhash
+    def __str__(self):
+        return self.Type
 
 class Images(models.Model):
     urlhash = models.CharField(max_length=6, blank=True, null=True)
     attachment = models.FileField(upload_to='dashboard', blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.urlhash
     class Meta:
         verbose_name_plural = 'Images'
@@ -42,26 +42,12 @@ class Bookings(models.Model):
     status = models.NullBooleanField(max_length=5, default=0, verbose_name="Payment status")
     mpesa_receipt_code = models.CharField(max_length=255, blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.urlhash
 
     class Meta:
         verbose_name_plural = 'Bookings'
 
-
-
-# class Reports(models.Model):
-#     urlhash = models.ForeignKey(Service, on_delete=models.CASCADE, verbose_name="Unique Code")
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     reference = models.CharField(max_length=255, verbose_name="Item Changed Reference")
-#     message = models.CharField(max_length=255)
-#     created_at = models.DateTimeField(auto_now_add=True)
-
-#     def __unicode__(self):
-#         return self.urlhash
-
-#     class Meta:
-#         verbose_name_plural = 'User Actions Reports'
 
 
 class Transaction(models.Model):
@@ -90,7 +76,7 @@ class C2BMessage(models.Model):
     last_name = models.CharField(max_length=50, blank=True, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return '{} {} {}'.format(self.first_name, self.middle_name, self.last_name)
 
 
@@ -109,7 +95,7 @@ class OnlineCheckoutResponse(models.Model):
     amount = models.DecimalField(max_digits=20, decimal_places=2, blank=True, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.phone)
 
     class Meta:

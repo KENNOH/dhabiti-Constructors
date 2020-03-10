@@ -65,8 +65,6 @@ class MyRegistrationForm(UserCreationForm):
 			raise forms.ValidationError("This phone number is more than expected size of 12 digits.")		
 		if not ((self.cleaned_data['phone']).isdigit()):
 			raise forms.ValidationError("This phone number is not in a valid format.Please exclude any characters or letters.Only numbers are allowed.")
-		if self.cleaned_data['phone'].startswith('0'):
-			raise forms.ValidationError("Sorry phone number must start with country code eg '2547xxxxxx'.")
 		return self.cleaned_data['phone']
 		
 	def clean_email(self):

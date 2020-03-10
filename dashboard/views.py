@@ -28,20 +28,25 @@ from django.http import HttpResponseRedirect
 from accounts.models import specialization
 from .models import Images,Service,Transaction, C2BMessage, OnlineCheckoutResponse,Bookings
 import string ,random
-from .tables import ServiceTable, TransactionTable, BookingsTable
+from .tables import ServiceTable, TransactionTable, BookingsTable, BookingsTable1
 from django_tables2 import RequestConfig
 from .render import Render
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from .utils import render_to_pdf
 from django.http import HttpResponse
+import datetime
 
 
 def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
 		return ''.join(random.choice(chars) for _ in range(size))
 
 
+def id_generator2(size=5, chars=string.ascii_uppercase):
+		return ''.join(random.choice(chars) for _ in range(size))
+
 @login_required(login_url='/accounts/login/')
+@user_passes_test(lambda u: u.groups.filter(name='Service Provider').exists())
 def client_home(request):
 	s = specialization.objects.all()
 	services = Service.objects.all()
@@ -50,14 +55,15 @@ def client_home(request):
 
 
 @login_required(login_url='/accounts/login/')
+@user_passes_test(lambda u: u.groups.filter(name='Service Provider').exists())
 def service_provider_home(request):
 	services = ServiceTable(Service.objects.all().filter(user=request.user).order_by('-created_at'))
 	RequestConfig(request, paginate={"per_page": 20}).configure(services)
 	return render(request, 'dashboard/service_provider.html', {'services': services})
 
 
-
 @login_required(login_url='/accounts/login/')
+@user_passes_test(lambda u: u.groups.filter(name='Service Provider').exists())
 def update_worker(request):
 	p = Profile.objects.get(user_id=request.user)
 	if request.method == "POST":
@@ -90,6 +96,7 @@ def update_worker(request):
 
 
 @login_required(login_url='/accounts/login/')
+@user_passes_test(lambda u: u.groups.filter(name='Service Provider').exists())
 def add(request):
 	if request.method == 'POST':
 		form = ServiceForm(request.POST, request.FILES)
@@ -119,28 +126,39 @@ def add(request):
 	    return render(request, 'dashboard/add.html',args)
 
 
+@login_required(login_url='/accounts/login/')
+@user_passes_test(lambda u: u.groups.filter(name='Service Provider').exists())
 def trans(request):
     trans = TransactionTable(Transaction.objects.all().filter(user_id=request.user).order_by('-last_updated'))
     RequestConfig(request, paginate={"per_page": 20}).configure(trans)
     return render(request, 'dashboard/transaction.html', {'trans': trans})
 
+
+@login_required(login_url='/accounts/login/')
+@user_passes_test(lambda u: u.groups.filter(name='Service Provider').exists())
 def service_expand(request,pk):
 	service = Service.objects.all().get(id=pk)
 	return render(request, 'dashboard/service_expand.html', {'form': service})
 
 
 @login_required(login_url='/accounts/login/')
+@user_passes_test(lambda u: u.groups.filter(name='Service Provider').exists())
 def bookings(request):
 	data = []
 	for i in Service.objects.all().filter(user=request.user):
 		data.append(i)
-	trans = BookingsTable(Bookings.objects.all().filter(urlhash__in=data))
+	trans = BookingsTable1(Bookings.objects.all().filter(urlhash__in=data))
 	RequestConfig(request, paginate={"per_page": 20}).configure(trans)
 	return render(request, 'dashboard/bookings.html', {'bookings': trans})
 
+
 @login_required(login_url='/accounts/login/')
+@user_passes_test(lambda u: u.groups.filter(name='Service Provider').exists())
 def generate_report(request):
 	hidden = request.POST['hidden']
+	now = datetime.datetime.now()
+	d = id_generator2()
+	n = str(request.user.first_name).split()[0][0] + "." + str(request.user.last_name).split()[0][0]
 	if hidden == 'transactions':
 		data = []
 		for i in Service.objects.all().filter(user=request.user):
@@ -151,7 +169,7 @@ def generate_report(request):
 			data2.append(i.contact_phone)
 		trans = Transaction.objects.filter(phone__in=data2)
 		template = get_template('dashboard/transactions_pdf.html')
-		context = {'transactions': trans}
+		context = {'transactions': trans, 'now': now, 'd': d, 'n': n}
 		html = template.render(context)
 		pdf = render_to_pdf('dashboard/transactions_pdf.html', context)
 		if pdf:
@@ -173,7 +191,7 @@ def generate_report(request):
 			data.append(i)
 		bookings = Bookings.objects.all().filter(urlhash__in=data)
 		template = get_template('dashboard/bookings_pdf.html')
-		context = {'bookings': bookings}
+		context = {'bookings': bookings, 'now': now, 'd': d, 'n': n}
 		html = template.render(context)
 		pdf = render_to_pdf('dashboard/bookings_pdf.html', context)
 		if pdf:
